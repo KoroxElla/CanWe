@@ -13,4 +13,7 @@ Internet Cloud CW
 | **Code & Version Control**      | Push code to GitHub              | Pull/test teammates’ code                 | Review PRs & merge changes               | Ensure frontend/backend compatibility             |
 | **Documentation & Testing**     | Document infrastructure steps    | Document DB and replication               | Document frontend & container setup      | Document testing & results                        |
 
-
+### Tech Stack
+- Backend: Springboot Java
+- Database : Postgre
+- Frontend: HTML, css( , javascript
