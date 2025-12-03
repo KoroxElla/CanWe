@@ -53,15 +53,6 @@ Internet Cloud CW
 | Perform Bug Fixes per Component         | ✔ | ✔ | ✔ | ✔ |
 
 
-### 2.5 Documentation (Task 2 Report Section)
-
-| Documentation Component                         | A | B | C | D |
-| ----------------------------------------------- | - | - | - | - |
-| Network Architecture Description                | ✔ | — | — | — |
-| AKS & Containerisation Documentation            | — | ✔ | — | — |
-| Backend Architecture & API Description          | — | — | ✔ | — |
-| Database Architecture & Replication Description | — | — | — | ✔ |
-
 ## TASK 3 – TESTING, EVALUATION & ANALYSIS
 
 ### 3.1 Scalability Testing
@@ -90,14 +81,6 @@ Internet Cloud CW
 | Collect Backend VM Logs (journalctl / API logs) | — | ✔ | — | — |
 | Collect Database Performance Metrics            | — | — | ✔ | — |
 | Collect Load Balancer Logs                      | — | — | — | ✔ |
-
-### 3.4 Documentation (Task 3 Report Section)
-| Task 3 Report Section                         | A | B | C | D |
-| --------------------------------------------- | - | - | - | - |
-| Scalability Results & Graphs                  | ✔ | — | — | — |
-| Backend Performance Analysis                  | — | ✔ | — | — |
-| Database Replication & Consistency Evaluation | — | — | ✔ | — |
-| Load Balancer Evaluation & QoS Metrics        | — | — | — | ✔ |
 
 
 
