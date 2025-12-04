@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Whiteboard Application</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>CanWe Whiteboard</h1>
+
+<div id="toolbar">
+    <div class="tool-group">
+        <button id="penTool" class="tool-btn active">
+            <span class="material-icons">edit</span>
+        </button>
+
+        <button id="eraserTool" class="tool-btn">
+            <span class="material-icons">auto_fix_high</span>
+        </button>
+
+        <button id="textTool" class="tool-btn">
+            <span class="material-icons">title</span>
+        </button>
+
+        <label class="tool-btn upload-btn">
+            <span class="material-icons">image</span>
+            <input type="file" id="imageInput" accept="image/*">
+        </label>
+
+        <button onclick="clearBoard()" class="tool-btn danger">
+            <span class="material-icons">delete_forever</span>
+        </button>
+    </div>
+
+    <div class="tool-group">
+        <label class="slider-group">
+            <span>Colour</span>
+            <input type="color" id="colorPicker" value="#000000">
+        </label>
+
+        <label class="slider-group">
+            <span>Pen size</span>
+            <input type="range" id="penSize" min="1" max="30" value="4">
+        </label>
+
+        <label class="slider-group">
+            <span>Opacity</span>
+            <input type="range" id="penOpacity" min="10" max="100" value="100">
+        </label>
+
+        <label class="slider-group">
+            <span>Eraser size</span>
+            <input type="range" id="eraserSize" min="5" max="50" value="20">
+        </label>
+    </div>
+
+    <span id="status"></span>
+</div>
+
+
+<canvas id="whiteboard" width="1000" height="600"></canvas>
+
+<script>
+    const USER_ID = "user-" + Math.floor(Math.random() * 100000);
+    const BOARD_ID = "main";
+</script>
+<script src="whiteboard.js"></script>
+</body>
+</html>
