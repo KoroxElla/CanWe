@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #f2f2f2;
+    font-family: "Segoe UI", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin-top: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+#toolbar {
+    margin-top: 15px;
+    padding: 12px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.15);
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.tool-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.tool-btn {
+    background: #eee;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tool-btn:hover {
+    background: #ddd;
+}
+
+.tool-btn.active {
+    background: #a6c2ff;
+}
+
+.tool-btn.danger {
+    background: #ffcccc;
+}
+
+.tool-btn.danger:hover {
+    background: #ffaaaa;
+}
+
+.upload-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-btn input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.slider-group {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: #333;
+    margin-right: 10px;
+}
+
+.slider-group input {
+    margin-top: 4px;
+}
+
+#whiteboard {
+    background: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 16px rgba(0,0,0,0.15);
+}
+
+#status {
+    font-weight: bold;
+    padding-left: 10px;
+    color: #555;
+}
+
