@@ -39,7 +39,7 @@ Internet Cloud CW
 | Build Backend Dockerfile                           | — | ✔ | — | — |
 | Create Kubernetes Deployment Manifests             | — | — | ✔ | — |
 | Configure Kubernetes Services (ClusterIP/NodePort) | — | — | ✔ | — |
-| Configure Ingress + Load Balancer Routing          | — | — | — | ✔ |
+| Configure Load Balancer Routing          | — | — | — | ✔ |
 | Push Images to Container Registry (ACR/DockerHub)  | ✔ | ✔ | ✔ | ✔ |
 
 
