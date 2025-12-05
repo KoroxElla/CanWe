@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: whiteboard-service
+  labels:
+    app: whiteboard-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: whiteboard-backend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  - name: websocket
+    port: 8081
+    targetPort: 8080
+    protocol: TCP
