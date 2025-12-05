@@ -8,7 +8,6 @@ kubectl apply -f k8s/configmap.yaml
 kubectl apply -f k8s/secrets.yaml
 kubectl apply -f k8s/pvc.yaml
 kubectl apply -f k8s/postgres.yaml
-kubectl apply -f k8s/redis.yaml
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service-clusterip.yaml
 
