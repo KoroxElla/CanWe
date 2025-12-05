@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -19,15 +20,17 @@ public class WhiteboardSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message)
-            throws Exception {
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
+        System.out.println("WS: Received -> " + message.getPayload());
 
+        // broadcast to ALL clients, including sender
         for (WebSocketSession s : sessions) {
-            if (s.isOpen() && s != session) {
+            if (s.isOpen()) {
                 s.sendMessage(message);
             }
         }
     }
+
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {

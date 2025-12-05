@@ -100,4 +100,58 @@ h1 {
     padding-left: 10px;
     color: #555;
 }
+#userPanel {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 8px 12px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+
+#userPanel input[type="text"] {
+    padding: 4px 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+#currentUser {
+    font-weight: 600;
+}
+
+#lastAction {
+    color: #555;
+    font-style: italic;
+}
+#canvasWrapper {
+    position: relative;
+    margin-top: 20px;
+    display: inline-block;
+    box-shadow: 0px 4px 16px rgba(0,0,0,0.15);
+    border-radius: 10px;
+}
+
+#whiteboard {
+    background: white;
+    border-radius: 10px;
+    display: block;
+}
+
+/* nickname bubble by the mouse */
+#cursorLabel {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 2px 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    transform: translate(8px, 8px); /* small offset from cursor */
+    display: none;
+}
 

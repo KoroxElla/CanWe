@@ -13,6 +13,37 @@ const eraserButton = document.getElementById("eraserTool");
 const textButton   = document.getElementById("textTool");
 const imageInput   = document.getElementById("imageInput");
 
+const nicknameInput   = document.getElementById("nicknameInput");
+const saveNicknameBtn = document.getElementById("saveNicknameBtn");
+const currentUserDiv  = document.getElementById("currentUser");
+const lastActionDiv   = document.getElementById("lastAction");
+const cursorLabel = document.getElementById("cursorLabel");
+
+// nickname + known users map
+let nickname = localStorage.getItem("nickname") || ("User-" + Math.floor(Math.random() * 1000));
+nicknameInput.value = nickname;
+currentUserDiv.textContent = "You: " + nickname;
+
+const users = {};
+users[USER_ID] = nickname;
+saveNicknameBtn.onclick = () => {
+    const newName = nicknameInput.value.trim();
+    if (!newName) return;
+
+    nickname = newName;
+    localStorage.setItem("nickname", nickname);
+    currentUserDiv.textContent = "You: " + nickname;
+
+    // notify others that we changed/declared our nickname
+    sendMessage({
+        type: "nick",
+        boardId: BOARD_ID,
+        userId: USER_ID,
+        nickname: nickname
+    });
+};
+
+
 // ===== State =====
 let currentTool = "pen";   // "pen" | "eraser" | "text"
 let drawing = false;
@@ -60,7 +91,8 @@ function connect() {
         sendMessage({
             type: "join",
             boardId: BOARD_ID,
-            userId: USER_ID
+            userId: USER_ID,
+            nickname: nickname,
         }, false);
     };
 
@@ -139,14 +171,24 @@ canvas.addEventListener("mousedown", (e) => {
 });
 
 canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("mouseout", () => drawing = false);
+canvas.addEventListener("mouseout", () => {
+    drawing = false;
+    cursorLabel.style.display = "none";  // hide label when leaving canvas
+});
 
 canvas.addEventListener("mousemove", (e) => {
-    if (!drawing) return;
-    if (currentTool !== "pen" && currentTool !== "eraser") return;
-
     const x = e.offsetX;
     const y = e.offsetY;
+
+    // --- move nickname label with cursor ---
+    cursorLabel.style.display = "block";
+    cursorLabel.textContent = nickname;
+    cursorLabel.style.left = x + "px";
+    cursorLabel.style.top  = y + "px";
+
+    // --- drawing logic (only when pen/eraser + mouse down) ---
+    if (!drawing) return;
+    if (currentTool !== "pen" && currentTool !== "eraser") return;
 
     let size;
     let color;
@@ -173,6 +215,7 @@ canvas.addEventListener("mousemove", (e) => {
         type,
         boardId: BOARD_ID,
         userId: USER_ID,
+        nickname: nickname,
         lastX,
         lastY,
         x,
@@ -209,6 +252,7 @@ canvas.addEventListener("click", (e) => {
         type: "text",
         boardId: BOARD_ID,
         userId: USER_ID,
+        nickname: nickname,
         x,
         y,
         text,
@@ -235,6 +279,7 @@ imageInput.addEventListener("change", (e) => {
             type: "image",
             boardId: BOARD_ID,
             userId: USER_ID,
+            nickname: nickname,
             dataUrl
         };
         sendMessage(msg);
@@ -251,7 +296,8 @@ function clearBoard() {
     const msg = {
         type: "clear",
         boardId: BOARD_ID,
-        userId: USER_ID
+        userId: USER_ID,
+        nickname: nickname,
     };
     sendMessage(msg);
 }
@@ -259,25 +305,63 @@ function clearBoard() {
 // initialize blank canvas
 clearBoard();
 
-// ===== 5. Handle incoming messages =====
+function upsertUser(from) {
+    if (from.userId && from.nickname) {
+        users[from.userId] = from.nickname;
+    }
+}
+
+function getNickname(userId) {
+    return users[userId] || userId || "Unknown";
+}
+
+function setLastAction(text) {
+    lastActionDiv.textContent = text;
+}
+
 function handleIncoming(data) {
+    // learn/update nickname if message has one
+    upsertUser(data);
+
+    const name = getNickname(data.userId);
+
     switch (data.type) {
+        case "join":
+            setLastAction(name + " joined the board");
+            break;
+
+        case "nick":
+            setLastAction(name + " updated their nickname");
+            break;
+
         case "draw":
         case "erase":
-            drawLine(data.lastX, data.lastY, data.x, data.y, data.color, data.size);
+            // only draw if it's NOT our own stroke (we already drew locally)
+            if (data.userId !== USER_ID) {
+                drawLine(data.lastX, data.lastY, data.x, data.y, data.color, data.size);
+            }
+            setLastAction(name + " drew on the board");
             break;
 
         case "clear":
+            // clear for everyone
             ctx.fillStyle = CANVAS_BG;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+            setLastAction(name + " cleared the board");
             break;
 
         case "text":
-            drawText(data.x, data.y, data.text, data.color, data.size);
+            if (data.userId !== USER_ID) {
+                drawText(data.x, data.y, data.text, data.color, data.size);
+            }
+            setLastAction(name + " added text");
             break;
 
         case "image":
-            drawImageFromDataUrl(data.dataUrl);
+            if (data.userId !== USER_ID) {
+                drawImageFromDataUrl(data.dataUrl);
+            }
+            setLastAction(name + " uploaded an image");
             break;
 
         default:

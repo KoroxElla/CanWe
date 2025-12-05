@@ -9,6 +9,17 @@
 <body>
 <h1>CanWe Whiteboard</h1>
 
+<div id="userPanel">
+    <label>
+        Nickname:
+        <input id="nicknameInput" type="text" maxlength="20" placeholder="Enter name">
+    </label>
+    <button id="saveNicknameBtn">Set</button>
+
+    <div id="currentUser"></div>
+    <div id="lastAction"></div>
+</div>
+
 <div id="toolbar">
     <div class="tool-group">
         <button id="penTool" class="tool-btn active">
@@ -59,7 +70,11 @@
 </div>
 
 
-<canvas id="whiteboard" width="1000" height="600"></canvas>
+<div id="canvasWrapper">
+    <canvas id="whiteboard" width="1000" height="600"></canvas>
+    <div id="cursorLabel"></div>
+</div>
+
 
 <script>
     const USER_ID = "user-" + Math.floor(Math.random() * 100000);
